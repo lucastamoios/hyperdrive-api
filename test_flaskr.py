@@ -36,7 +36,8 @@ class HyperdriveTestCase(TestCase):
 
     def test_spaceships_returns_json(self):
         # Only checks if the answer is loadable
-        self._load_json(self.client.get('/'))
+        with patch_get_with_real_response():
+            self._load_json(self.client.get('/'))
 
     def test_load_spaceships_calls_requests(self):
         with patch_get_with_multiple_pages() as get:
@@ -54,6 +55,15 @@ class HyperdriveTestCase(TestCase):
     def test_load_spaceships_gets_data(self):
         with patch_get_with_real_response():
             r = services.get_spaceship_data()
+            self.assertListEqual(
+                r,
+                [{'name': 'Naboo star skiff', 'hyperdrive': '0.5'}]
+            )
+
+    def test_spaceship_endpoint_returns_all_data(self):
+        # Integration test
+        with patch_get_with_real_response():
+            r = self._load_json(self.client.get('/'))
             self.assertListEqual(
                 r,
                 [{'name': 'Naboo star skiff', 'hyperdrive': '0.5'}]

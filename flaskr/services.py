@@ -2,6 +2,8 @@ import requests
 
 
 def get_spaceship_data():
+    """Gets from SWAPI the data from spaceships and returns in the asked form
+    """
     page = 0
     content = []
     while True:
