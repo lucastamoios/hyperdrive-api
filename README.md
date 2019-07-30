@@ -11,5 +11,5 @@ install -r requirements.txt` and then run `pytest`.
 
 ## Running the project
 
-Just run `python flask/app.py` and the API will be running on
+Just run `env FLASK_APP=flaskr/app.py flask run` and the API will be running on
 `localhost:5000`
