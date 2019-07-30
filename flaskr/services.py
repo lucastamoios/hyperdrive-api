@@ -34,9 +34,17 @@ def _parse_page_content(page_content):
 
 
 def _classify_spaceships_for_having_hyperdrive(content):
-    with_hyperdrive = [c for c in content if c['hyperdrive']]
-    without_hyperdrive = [{'name': c['name']} for c in content if not c['hyperdrive']]
+    with_hyperdrive = filter(_is_hyperdrive_known, content)
+    without_hyperdrive = [{'name': c['name']} for c in content if not _is_hyperdrive_known(c)]
     return {
-        'starships': with_hyperdrive,
+        'starships': sorted(with_hyperdrive, key=_get_hyperdrive),
         'starships_unknown_hyperdrive': without_hyperdrive
     }
+
+
+def _is_hyperdrive_known(starship):
+    return starship['hyperdrive'] != 'unknown'
+
+
+def _get_hyperdrive(starship):
+    return starship['hyperdrive']

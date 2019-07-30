@@ -59,10 +59,11 @@ class HyperdriveTestCase(TestCase):
                 r,
                 {
                     'starships': [
+                        {'name': 'Y-wing', 'hyperdrive': '0.4'},
                         {'name': 'Naboo star skiff', 'hyperdrive': '0.5'},
                     ],
                     'starships_unknown_hyperdrive': [
-                        {'name': 'Executor'},
+                        {'name': 'AA-9 Coruscant freighter'},
                     ]
                 }
             )
@@ -75,10 +76,11 @@ class HyperdriveTestCase(TestCase):
                 r,
                 {
                     'starships': [
+                        {'name': 'Y-wing', 'hyperdrive': '0.4'},
                         {'name': 'Naboo star skiff', 'hyperdrive': '0.5'},
                     ],
                     'starships_unknown_hyperdrive': [
-                        {'name': 'Executor'},
+                        {'name': 'AA-9 Coruscant freighter'},
                     ]
                 }
             )
