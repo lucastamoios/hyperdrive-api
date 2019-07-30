@@ -12,10 +12,13 @@ def get_spaceship_data():
         content.extend(page_content)
         if not is_there_next_page:
             break
-    return content
+    return _classify_spaceships_for_having_hyperdrive(content)
 
 
 def _get_content_from_page(page_number):
+    """Gets formatted content from a page and returns a json and a boolean
+    informing if exists any other page
+    """
     url = 'https://swapi.co/api/starships/'
     r = requests.get(url, params={'page': page_number})
     page_content = r.json()
@@ -23,9 +26,17 @@ def _get_content_from_page(page_number):
 
 
 def _parse_page_content(page_content):
-    """Returns the needed content from the given page"""
     return [
         # List of dicts with name and hyperdrive
-        {'name': x['name'], 'hyperdrive': x['hyperdrive_rating']}
+        {'name': x['name'], 'hyperdrive': x.get('hyperdrive_rating', '')}
         for x in page_content['results']
     ]
+
+
+def _classify_spaceships_for_having_hyperdrive(content):
+    with_hyperdrive = [c for c in content if c['hyperdrive']]
+    without_hyperdrive = [{'name': c['name']} for c in content if not c['hyperdrive']]
+    return {
+        'starships': with_hyperdrive,
+        'starships_unknown_hyperdrive': without_hyperdrive
+    }

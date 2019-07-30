@@ -55,16 +55,30 @@ class HyperdriveTestCase(TestCase):
     def test_load_spaceships_gets_data(self):
         with patch_get_with_real_response():
             r = services.get_spaceship_data()
-            self.assertListEqual(
+            self.assertEqual(
                 r,
-                [{'name': 'Naboo star skiff', 'hyperdrive': '0.5'}]
+                {
+                    'starships': [
+                        {'name': 'Naboo star skiff', 'hyperdrive': '0.5'},
+                    ],
+                    'starships_unknown_hyperdrive': [
+                        {'name': 'Executor'},
+                    ]
+                }
             )
 
     def test_spaceship_endpoint_returns_all_data(self):
         # Integration test
         with patch_get_with_real_response():
             r = self._load_json(self.client.get('/'))
-            self.assertListEqual(
+            self.assertEqual(
                 r,
-                [{'name': 'Naboo star skiff', 'hyperdrive': '0.5'}]
+                {
+                    'starships': [
+                        {'name': 'Naboo star skiff', 'hyperdrive': '0.5'},
+                    ],
+                    'starships_unknown_hyperdrive': [
+                        {'name': 'Executor'},
+                    ]
+                }
             )

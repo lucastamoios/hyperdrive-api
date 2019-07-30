@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 
-from services import get_spaceship_data
+from flaskr.services import get_spaceship_data
 
 
 app = Flask(__name__)
